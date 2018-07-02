@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # 遇到login/ 的url 将交给login.urls来处理
+    path(r'login/', include("login.urls")),
+    path(r'loginTest/', include("loginTest.urls"))
 ]
