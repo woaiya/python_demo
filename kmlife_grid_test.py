@@ -34,26 +34,30 @@ def time():
 
 
 def dev_grid():
-    new_time = time()
-    url = interface + "areaCode=%s&next=%s" % (gird_data["areaCode"], gird_data["index"])
-    data = json.loads(requests.get(url, headers=headers, verify=False, timeout=5).content)
-    gird_index_data = data["data"]["items"][0]
-    if gird_index_data["ad"] is None:
-        gird_data["is_continue"] = False
-        log_data = "%s: 格子下架,监控结束" % new_time
-    else:
-        is_banned = gird_index_data["ad"]["isBanned"]
-        banned_text = gird_index_data["ad"]["bannedText"]
-        if is_banned is True:
-            log_data = "%s: %s" % (new_time, banned_text)
-        else:
-            if gird_data["is_fist_time"] == "":
-                gird_data["is_fist_time"] = new_time
-                log_data = "%s: 当前格子已通过审核" % new_time
-            else:
-                log_data = "%s: 当前格子已展示" % new_time
-    print(log_data)
-    return log_data
+	try:
+		new_time = time()
+		url = interface + "areaCode=%s&next=%s" % (gird_data["areaCode"], gird_data["index"])
+		data = json.loads(requests.get(url, headers=headers, verify=False, timeout=5).content)
+		gird_index_data = data["data"]["items"][0]
+		if gird_index_data["ad"] is None:
+			gird_data["is_continue"] = False
+			log_data = "%s: 格子下架,监控结束" % new_time
+		else:
+			is_banned = gird_index_data["ad"]["isBanned"]
+			banned_text = gird_index_data["ad"]["bannedText"]
+			if is_banned is True:
+				log_data = "%s: %s" % (new_time, banned_text)
+			else:
+				if gird_data["is_fist_time"] == "":
+					gird_data["is_fist_time"] = new_time
+					log_data = "%s: 当前格子已通过审核" % new_time
+				else:
+					log_data = "%s: 当前格子已展示" % new_time
+		print(log_data)
+		return log_data
+	except KeyError as e:
+        print(e)
+        return e
 
 
 if __name__ == "__main__":
