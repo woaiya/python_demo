@@ -15,7 +15,7 @@ headers = {
     'content-type': 'application/json',
     "Accept - Encoding": "gzip",
 	"cid": "97587b361e9862fd260ad5a6807501f2",
-    "X-TOKEN": "3ckbqbatc3lab61nt2eppe75d6",
+    "X-TOKEN": "5b3rq10iqnillqciijhvs4pcbc",
     "User-Agent": "com.qmsh.hbq/1.2.8 (Linux; U; Android 5.1; zh-cn) (vivo; 10208)",
 }
 
@@ -34,28 +34,28 @@ def time():
 
 
 def dev_grid():
-	try:
-		new_time = time()
-		url = interface + "areaCode=%s&next=%s" % (gird_data["areaCode"], gird_data["index"])
-		data = json.loads(requests.get(url, headers=headers, verify=False, timeout=5).content)
-		gird_index_data = data["data"]["items"][0]
-		if gird_index_data["ad"] is None:
-			gird_data["is_continue"] = False
-			log_data = "%s: 格子下架,监控结束" % new_time
-		else:
-			is_banned = gird_index_data["ad"]["isBanned"]
-			banned_text = gird_index_data["ad"]["bannedText"]
-			if is_banned is True:
-				log_data = "%s: %s" % (new_time, banned_text)
-			else:
-				if gird_data["is_fist_time"] == "":
-					gird_data["is_fist_time"] = new_time
-					log_data = "%s: 当前格子已通过审核" % new_time
-				else:
-					log_data = "%s: 当前格子已展示" % new_time
-		print(log_data)
-		return log_data
-	except KeyError as e:
+    try:
+        new_time = time()
+        url = interface + "areaCode=%s&next=%s" % (gird_data["areaCode"], gird_data["index"])
+        data = json.loads(requests.get(url, headers=headers, verify=False, timeout=5).content)
+        gird_index_data = data["data"]["items"][0]
+        if gird_index_data["ad"] is None:
+            gird_data["is_continue"] = False
+            log_data = "%s: 格子下架,监控结束" % new_time
+        else:
+            is_banned = gird_index_data["ad"]["isBanned"]
+            banned_text = gird_index_data["ad"]["bannedText"]
+            if is_banned is True:
+                log_data = "%s: %s" % (new_time, banned_text)
+            else:
+                if gird_data["is_fist_time"] == "":
+                    gird_data["is_fist_time"] = new_time
+                    log_data = "%s: 当前格子已通过审核" % new_time
+                else:
+                    log_data = "%s: 当前格子已展示" % new_time
+        print(log_data)
+        return log_data
+    except KeyError as e:
         print(e)
         return e
 
