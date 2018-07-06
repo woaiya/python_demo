@@ -74,7 +74,7 @@ def re_data(area_code, index):
 if __name__ == "__main__":
     txt_name = "grid_test.txt"
     while grid["is_continue"] is True:
-        up = re_data("440305", "245")
+        up = re_data("440305", "261")
         with open(txt_name, "a+", encoding='utf8') as f:
             f.write(up + "\n")
         sleep(300)
